@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta name="google-site-verification" content="Nsy1XWXj6vcqX0K_h_y_yeBZGBv18Uw2_KSalKDRt1g" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>動物社會學｜第一組</title>
+
+  <style>
+    :root{
+      --bg:#0f1714;
+      --panel:#16211d;
+      --panel2:#1d2b26;
+      --text:#eef6f1;
+      --muted:#b9ccc3;
+      --accent:#89b39c;
+      --accent2:#a9d1b8;
+      --line:rgba(169,209,184,.14);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+      background:linear-gradient(180deg,#0c1310,var(--bg));
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:auto;
+      padding:24px;
+    }
+
+    .hero{
+      padding:50px 30px;
+      border-radius:30px;
+      background:var(--panel);
+      border:1px solid var(--line);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:36px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      max-width:700px;
+      line-height:1.8;
+    }
+
+    .section{
+      margin-top:40px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    }
+
+    .card{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:.2s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+    }
+
+    .status{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      display:inline-block;
+      margin-bottom:10px;
+      background:rgba(255,255,255,.08);
+      color:#d7e3dc;
+    }
+
+    .done{
+      background:rgba(137,179,156,.2);
+      color:var(--accent2);
+    }
+
+    h3{
+      margin:0 0 10px;
+      font-size:18px;
+    }
+
+    p{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .meta span{
+      font-size:12px;
+      background:#ffffff10;
+      padding:4px 8px;
+      border-radius:10px;
+      margin-right:5px;
+    }
+
+    .btn{
+      margin-top:15px;
+      padding:10px;
+      text-align:center;
+      border-radius:10px;
+      background:var(--accent);
+      color:#000;
+      font-weight:bold;
+    }
+
+    .btn.disabled{
+      background:#ffffff20;
+      color:#ccc;
+    }
+
+    @media(max-width:900px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- 主視覺 -->
+    <section class="hero">
+      <h1>動物社會學｜第一組</h1>
+      <p>
+        本網站為動物社會學第一組之報告整理，組員包含吳宜臻、吳敏瑄、黃瓊尹、彭筱媃。
+        本學期負責之章節包括《變動物為競賽者》、《Frey：動物權利的效益主義式批評》與《Contractarianism and Animal Rights》。
+        透過上述不同理論觀點，分析人類如何正當化對動物的使用與支配，
+        並呈現其間的理論張力與衝突，進一步反思動物在社會中的位置與倫理意義。
+        敬請指教。
+      </p>
+    </section>
+
+    <!-- 報告區 -->
+    <section class="section">
+      <div class="grid">
+
+        <!-- 已完成 -->
+        <div class="card">
+          <div>
+            <div class="status done">已完成</div>
+            <h3>《變動物為競賽者》</h3>
+            <p>分析動物競技、打獵與賽狗產業，揭露娛樂背後的動物剝削與倫理問題。</p>
+            <div class="meta">
+              <span>動物競技</span>
+              <span>倫理批判</span>
+            </div>
+          </div>
+          <a class="btn" href="competition.html" target="_blank">閱讀</a>
+        </div>
+
+        <!-- Frey -->
+        <div class="card">
+          <div>
+            <div class="status">即將發表｜2026.05.15</div>
+            <h3>《Frey：動物權利的效益主義式批評》</h3>
+            <p>探討效益主義如何質疑動物權利，並從能力差異重新思考生命價值。</p>
+            <div class="meta">
+              <span>效益主義</span>
+              <span>動物倫理</span>
+            </div>
+          </div>
+          <div class="btn disabled">敬請期待</div>
+        </div>
+
+        <!-- 契約論 -->
+        <div class="card">
+          <div>
+            <div class="status">即將發表｜2026.05.29</div>
+            <h3>《Contractarianism and Animal Rights》</h3>
+            <p>說明契約論如何將動物排除在道德共同體之外，並反思其限制。</p>
+            <div class="meta">
+              <span>契約論</span>
+              <span>道德哲學</span>
+            </div>
+          </div>
+          <div class="btn disabled">敬請期待</div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
