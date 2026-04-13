@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>動物社會學-第一組</title>
+  <style>
+    :root {
+      --bg: #0f1714;
+      --panel: #16211d;
+      --panel-2: #1d2b26;
+      --card: #22332d;
+      --text: #eef6f1;
+      --muted: #b9ccc3;
+      --accent: #89b39c;
+      --accent-2: #a9d1b8;
+      --danger: #d6a26f;
+      --shadow: 0 18px 40px rgba(0,0,0,.22);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(169,209,184,.14), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(137,179,156,.10), transparent 22%),
+        linear-gradient(180deg, #0c1310 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 16, 13, .72);
+      border-bottom: 1px solid rgba(169,209,184,.12);
+    }
+
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: .04em;
+      font-size: 1rem;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(137,179,156,.12);
+      color: var(--muted);
+      font-size: .92rem;
+      transition: .25s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(169,209,184,.22);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 20px 48px;
+      display: grid;
+      grid-template-columns: 1.25fr .95fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-card, .summary-card {
+      background: linear-gradient(180deg, rgba(34,51,45,.95), rgba(22,33,29,.96));
+      border: 1px solid rgba(169,209,184,.12);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 42px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(169,209,184,.10);
+      color: var(--accent-2);
+      font-size: .9rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: .25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #112019;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: var(--accent-2);
+    }
+
+    .btn-secondary {
+      background: rgba(169,209,184,.08);
+      border-color: rgba(169,209,184,.14);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(169,209,184,.16);
+      transform: translateY(-2px);
+    }
+
+    .summary-card {
+      padding: 28px;
+    }
+
+    .summary-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .summary-item {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(169,209,184,.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .summary-item strong {
+      display: block;
+      color: var(--accent-2);
+      margin-bottom: 4px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .section {
+      margin-top: 42px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+    }
+
+    .section-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(214,162,111,.14);
+      color: #f0c89a;
+      font-size: .86rem;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .slide {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid rgba(169,209,184,.10);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      min-height: 178px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -40px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(169,209,184,.15), transparent 68%);
+      pointer-events: none;
+    }
+
+    .slide:hover {
+      transform: translateY(-4px);
+      border-color: rgba(169,209,184,.24);
+      box-shadow: 0 22px 44px rgba(0,0,0,.28);
+    }
+
+    .slide-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(137,179,156,.15);
+      color: var(--accent-2);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .slide h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+      line-height: 1.4;
+    }
+
+    .slide p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .footer {
+      margin-top: 48px;
+      padding: 26px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(34,51,45,.92), rgba(22,33,29,.92));
+      border: 1px solid rgba(169,209,184,.10);
+      color: var(--muted);
+    }
+
+    .footer strong {
+      color: var(--accent-2);
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .hero-card,
+      .summary-card,
+      .slide,
+      .footer {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">動物社會學-第一組</div>
+      <nav class="nav">
+        <a href="#part1">1–20頁</a>
+        <a href="#part2">21–40頁</a>
+        <a href="#part3">41–60頁</a>
+        <a href="#part4">61–80頁</a>
+        <a href="#part5">81–85頁</a>
+        <a href="#discussion">問題討論</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">動物社會學-第一組</div>
+      <h1>《變動物為競賽者》</h1>
+      <p>
+        無論打獵、牛仔競技還是賽狗，當動物被迫成為表演、娛樂與戰利品時，所謂的體育、傳統與福利話語，往往只是掩飾暴力的外衣。
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#part1">開始瀏覽</a>
+        <a class="btn btn-secondary" href="#discussion">看問題討論</a>
+      </div>
+    </div>
+
+    <aside class="summary-card">
+      <h2>文獻結構</h2>
+      <div class="summary-list">
+        <div class="summary-item">
+          <strong>第一部分</strong>
+          引言與打獵開始，建立全面反對動物競技的立場。
+        </div>
+        <div class="summary-item">
+          <strong>第二部分</strong>
+          深化打獵批判，拆解獵人的常見合理化說法。
+        </div>
+        <div class="summary-item">
+          <strong>第三部分</strong>
+          轉入牛仔競技，指出其商業化與制度化虐待。
+        </div>
+        <div class="summary-item">
+          <strong>第四部分</strong>
+          聚焦媒體遮蔽與賽狗產業，分析動物福利與動物權利的衝突。
+        </div>
+        <div class="summary-item">
+          <strong>第五部分</strong>
+          透過問題討論與結論，回到核心追問：動物競技究竟該改善，還是應該被終止。
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <main>
+    <section class="section" id="part1">
+      <div class="section-header">
+        <div>
+          <h2>1–20頁｜引言＋打獵開始</h2>
+        </div>
+        <div class="badge">P1–P20</div>
+      </div>
+      <div class="grid">
+        <article class="slide"><div class="slide-no">P1</div><h3>動物競技歷史悠久</h3><p>人類將動物用於體育競技的歷史極為悠久，例如早在西元前680年的古代奧運會中，就已經出現了馬車賽跑的活動。</p></article>
+        <article class="slide"><div class="slide-no">P2</div><h3>動物被大量剝削</h3><p>時至今日，有千百萬的動物在體育競技的名義下遭受人類的大量剝削，這已是無法否認的事實。</p></article>
+        <article class="slide"><div class="slide-no">P3</div><h3>人類從未真正停止傷害</h3><p>儘管參與競技者常把動物福利掛在嘴邊，但他們從未真正因為考量動物福利，而停止或改進對動物造成傷害的行為。</p></article>
+        <article class="slide"><div class="slide-no">P4</div><h3>動物權利立場：全面反對</h3><p>因為上述剝削，動物權利論者在此議題上採取極端且全面反對的立場，絕不允許動物被以任何形式用於任何競技活動。</p></article>
+        <article class="slide"><div class="slide-no">P5</div><h3>打獵是龐大產業</h3><p>打獵至今仍是一項龐大的產業，據估計，僅在2000年全年用於打獵的總支出就高達210億美元。</p></article>
+        <article class="slide"><div class="slide-no">P6</div><h3>被殺動物種類廣泛</h3><p>每年在美國境內死於打獵的動物數量高達1.34億隻，其中絕大部分與鹿無關，而是涵蓋哀鳩、兔子、松鼠等多種廣泛的動物。</p></article>
+        <article class="slide"><div class="slide-no">P7</div><h3>科技讓打獵失去公平</h3><p>現代獵人配備了GPS、三維偽裝系統等數千美金的高科技裝備，這讓僅能依賴感覺器官的動物無從防備，徹底失去了公平追逐的意義。</p></article>
+        <article class="slide"><div class="slide-no">P8</div><h3>能逃跑≠公平競技</h3><p>如果僅因為動物還具備逃跑的能力，就將打獵視為堂而皇之的體育競技，這在邏輯上是完全錯誤的。</p></article>
+        <article class="slide"><div class="slide-no">P9</div><h3>體育需「自願參與」</h3><p>真正的「體育」運動（如棒球、足球）有一個核心真意，那就是參與其中的競技者必須是完全自願的。</p></article>
+        <article class="slide"><div class="slide-no">P10</div><h3>打獵本質是單向屠殺</h3><p>因為動物並非自願參與這場「比賽」，打獵的本質其實就像古羅馬圓形競技場裡對角鬥士與獅子的單向屠殺，絕非體育。</p></article>
+        <article class="slide"><div class="slide-no">P11</div><h3>獵人主張「人道打獵」</h3><p>許多獵人不願被視為殘忍，便自稱是人道主義的典範，主張讓動物迅速死於槍下比大自然或農場屠殺更人道。</p></article>
+        <article class="slide"><div class="slide-no">P12</div><h3>這其實是虛偽說法</h3><p>這種說法其實極度虛偽，因為一個人不能藉由指出別人更殘忍，來證明自己隨意射殺動物的行為是仁慈的。</p></article>
+        <article class="slide"><div class="slide-no">P13</div><h3>人道殺戮本身矛盾</h3><p>從邏輯上而言，主張「人道打獵」就如同宣稱有「人道強暴」一樣，人道與殘酷的殺戮行為本身就是自相矛盾的。</p></article>
+        <article class="slide"><div class="slide-no">P14</div><h3>收藏型獵人追求戰利品</h3><p>在獵人圈中，有一群收藏型獵人專門追求將動物頭顱作為戰利品，甚至願意花費重金去完成包含北極熊、海象在內的「北極大滿貫」。</p></article>
+        <article class="slide"><div class="slide-no">P15</div><h3>打獵常靠嚮導完成</h3><p>這種打獵往往是在嚮導的全程協助下完成的，嚮導會負責尋找獵物、帶領獵人靠近，並明確指示獵人何時可以開槍。</p></article>
+        <article class="slide"><div class="slide-no">P16</div><h3>獵人以殺戮為榮</h3><p>這些獵人對於自己能輕易殺死巨大且毫無防備的動物感到非常自豪，甚至會將上百件動物頭顱掛在牆上炫耀。</p></article>
+        <article class="slide"><div class="slide-no">P17</div><h3>這種行為毫無競技性</h3><p>在嚮導協助下射殺毫無防備的動物，就如同坐船去「射擊一把大椅子」一樣，根本沒有任何成就感與體育競技性可言。</p></article>
+        <article class="slide"><div class="slide-no">P18</div><h3>封閉式狩獵興起</h3><p>為了滿足那些只想獲得戰利品卻不願費力追趕獵物的人，全美各地興起了約1000處提供封閉式狩獵的場所。</p></article>
+        <article class="slide"><div class="slide-no">P19</div><h3>被包裝成保護區</h3><p>這些從事商業殺戮的封閉式狩獵場，在廣告宣傳中往往會被美化並包裝成所謂的「狩獵保護區」。</p></article>
+        <article class="slide"><div class="slide-no">P20</div><h3>獵物多為人工飼養</h3><p>在這些場所中供人射殺的獵物，有許多是人類人工飼養的，牠們對人類充滿信賴，當獵人靠近時甚至不會受驚擾。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="part2">
+      <div class="section-header">
+        <div>
+          <h2>21–40頁｜打獵批判深化</h2>
+        </div>
+        <div class="badge">P21–P40</div>
+      </div>
+      <div class="grid">
+        <article class="slide"><div class="slide-no">P21</div><h3>封閉狩獵毫無逃生機會</h3><p>動物被困在鐵絲柵欄等有限的區域內，打獵的過程就如同「射擊水桶裡的魚」，動物根本毫無逃生機會。</p></article>
+        <article class="slide"><div class="slide-no">P22</div><h3>獵人為戰利品故意折磨</h3><p>獵人為了確保動物頭部或肩部等戰利品的完整，會故意避開要害而射擊動物的腹部與背部，導致動物遭受極度恐懼與痛苦折磨。</p></article>
+        <article class="slide"><div class="slide-no">P23</div><h3>生命被明碼標價</h3><p>在這裡，動物的生命被當成商品明碼標價，例如一隻科西嘉羊售價350美元，而獵殺一隻犀牛則高達20000美元。</p></article>
+        <article class="slide"><div class="slide-no">P24</div><h3>動物來源包含動物園</h3><p>令人震驚的是，這些封閉狩獵場裡的動物，有許多竟來自於極力宣揚「動物福利」的動物園與馬戲團。</p></article>
+        <article class="slide"><div class="slide-no">P25</div><h3>動物被轉賣牟利</h3><p>動物園會將館內空間不足的「多餘動物」賣給貿易商，再轉賣給封閉式狩獵場供人獵殺以牟取利潤，盡顯偽善。</p></article>
+        <article class="slide"><div class="slide-no">P26</div><h3>傳統獵人也有問題</h3><p>自詡為「真正的獵人」雖然鄙視封閉狩獵，但他們同樣錯誤地將打獵視為自己有權進行的體育運動。</p></article>
+        <article class="slide"><div class="slide-no">P27</div><h3>會編造理由合理化</h3><p>這些獵人不會對自己的殺戮保持沉默，而是迫不及待地編造出許多故事與理由，試圖為自己的行為辯解並予以合理化。</p></article>
+        <article class="slide"><div class="slide-no">P28</div><h3>理由一：天性說</h3><p>獵人提出的第一個理由是「天性說」，宣稱打獵是人類基因使然，殺死其他動物是人類生命中不可或缺的一部分。</p></article>
+        <article class="slide"><div class="slide-no">P29</div><h3>社會文化也支持此說</h3><p>這種說法甚至得到許多重量級學者與知識份子的背書，他們在著作中宣稱對打獵的熱愛是長進人類每一條神經的情感。</p></article>
+        <article class="slide"><div class="slide-no">P30</div><h3>但多數人根本不打獵</h3><p>然而現實證據完全推翻了此說法，因為高達95%的多數人根本不打獵，他們並未因為不殺戮而壓制所謂的天性或缺乏基因。</p></article>
+        <article class="slide"><div class="slide-no">P31</div><h3>理由二：因為愛</h3><p>第二個理由是「因為愛」，支持者聲稱獵人對於獵物懷有一種深沉的狂愛，是因為深深愛著動物才將其殺死。</p></article>
+        <article class="slide"><div class="slide-no">P32</div><h3>愛不可能導致殺戮</h3><p>這種說法極度扭曲且違背常理，因為正常的愛絕不可能導致想要殺死對方的結果。</p></article>
+        <article class="slide"><div class="slide-no">P33</div><h3>理由三：宗教神聖</h3><p>第三個理由是「宗教神聖」，獵人試圖讓人相信，藉由殺死野生動物，可以引領牠們進入超越現實的存在形式並獲得宗教昇華。</p></article>
+        <article class="slide"><div class="slide-no">P34</div><h3>這種說法毫無邏輯</h3><p>這套不知所云的宗教論述毫無邏輯可言，因為如果將同樣的邏輯套用在殺害人類上，所有人必定會強烈反對。</p></article>
+        <article class="slide"><div class="slide-no">P35</div><h3>殺動物與殺人同樣不合理</h3><p>我們絕不能為了一種宗教上的提升而去殺人，基於同樣的道理，為了宗教理由去殺死野生動物自然也毫無正當性。</p></article>
+        <article class="slide"><div class="slide-no">P36</div><h3>理由四：幫助動物</h3><p>第四個理由是「幫助動物」，獵人常將自己粉飾成野生動物最好的朋友，宣稱殺死動物是為了幫助牠們免於冬日餓死或凍死的折磨。</p></article>
+        <article class="slide"><div class="slide-no">P37</div><h3>其實不符合事實</h3><p>這種說法極度偽善且不符事實，因為獵人最常捕殺的哀鳩、松鼠與野雞等動物，多半根本不是面臨凍死或餓死威脅的物種。</p></article>
+        <article class="slide"><div class="slide-no">P38</div><h3>獵人反而殺最健康個體</h3><p>如果真為了減輕痛苦，獵人應該射殺老弱病殘，但實際上他們帶回家的總是體型最大、最健康的個體，也就是最能熬過冬天的動物。</p></article>
+        <article class="slide"><div class="slide-no">P39</div><h3>真相：享受殺戮</h3><p>剝開所有虛偽的藉口，打獵的真相純粹是獵人在其中得到了樂趣，而這種真正的樂趣正是來自於殺戮本身。</p></article>
+        <article class="slide"><div class="slide-no">P40</div><h3>殺戮帶來生理快感</h3><p>醫學研究更表明，獵人在見到獵物與進行殺戮時，心律會大幅加快，這種行為會為他們帶來一種刺激且令人不寒而慄的生理快感。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="part3">
+      <div class="section-header">
+        <div>
+          <h2>41–60頁｜牛仔競技</h2>
+        </div>
+        <div class="badge">P41–P60</div>
+      </div>
+      <div class="grid">
+        <article class="slide"><div class="slide-no">P41</div><h3>支持打獵者進行抹黑</h3><p>當面對動物權利論者的質疑時，國家獵槍協會等支持組織常不作正面回應，而是以抹黑與人身攻擊來對付反對者。</p></article>
+        <article class="slide"><div class="slide-no">P42</div><h3>動保方呼籲理性對話</h3><p>儘管面臨這些惡毒的攻擊，動物權利論者仍相信多數民眾能理解真相，並呼籲雙方應心平氣和地進行理性對話。</p></article>
+        <article class="slide"><div class="slide-no">P43</div><h3>獵人實際依賴他人</h3><p>從獵人需要嚮導幫忙尋找獵物、指示何時開槍，甚至連切割動物頭顱和搬運屍體都要依賴他人可以看出，打獵毫無技術可言。</p></article>
+        <article class="slide"><div class="slide-no">P44</div><h3>打獵毫無體育精神</h3><p>這種獵人只需坐等獵物出現並扣動扳機的行為，充分暴露出打獵的真相中根本沒有任何體育元素與精神。</p></article>
+        <article class="slide"><div class="slide-no">P45</div><h3>牛仔競技宣稱重視福利</h3><p>牛仔職業競技協會宣稱他們重視動物福利，強調會人道對待動物，並規定所資助的比賽必須有獸醫在場。</p></article>
+        <article class="slide"><div class="slide-no">P46</div><h3>多數競技無監管</h3><p>事實上，這只是冰山一角，全美每年大約5000場的牛仔競技中，有高達85%根本不受該協會資助與監管，遑論有獸醫在場。</p></article>
+        <article class="slide"><div class="slide-no">P47</div><h3>商業化產業巨大</h3><p>牛仔競技是一個擁有數千萬觀眾的巨大商業化產業，受到眾多知名品牌的贊助，並透過體育電視網向全美直播。</p></article>
+        <article class="slide"><div class="slide-no">P48</div><h3>動物完全無法逃脫</h3><p>比起打獵，牛仔競技中的動物處境更慘，小牛與馬匹連逃脫的機會都沒有，只能面臨在場上被勒死或事後被運往屠宰場的命運。</p></article>
+        <article class="slide"><div class="slide-no">P49</div><h3>馬的暴跳被用來評分</h3><p>在騎光背馬等經典項目中，馬匹猛烈的暴跳程度被用來作為高達50%的評分標準，促使參賽者用盡方法刺激馬匹。</p></article>
+        <article class="slide"><div class="slide-no">P50</div><h3>實際是因為疼痛刺激</h3><p>這些馬匹其實是老手而非未馴服的野馬，牠們之所以猛烈暴跳，是因為遭受電擊以及側面韁繩猛烈勒緊敏感部位所帶來的極度驚恐與劇痛。</p></article>
+        <article class="slide"><div class="slide-no">P51</div><h3>工具仍造成傷害</h3><p>雖然協會規定馬刺必須是鈍器，但常識與獸醫皆指出，連續的鈍器擊打同樣會對馬匹造成嚴重的內部組織傷害與瘀傷。</p></article>
+        <article class="slide"><div class="slide-no">P52</div><h3>競技建立在痛苦上</h3><p>因為動物越驚恐、越疼痛就會跳得越猛烈，這項「運動」的變態邏輯完全是建立在動物的驚恐與痛苦之上。</p></article>
+        <article class="slide"><div class="slide-no">P53</div><h3>套牛被美化為傳統</h3><p>繩套套牛項目常被牛仔協會美化為早期西部牛仔為了幫小牛進行醫療照顧而發展出的光榮傳統。</p></article>
+        <article class="slide"><div class="slide-no">P54</div><h3>訓練過程極度殘忍</h3><p>但如今的訓練過程卻不受法律約束且極度殘忍，比賽者為了練習技能，會在同一隻小牛身上不斷反覆施暴。</p></article>
+        <article class="slide"><div class="slide-no">P55</div><h3>小牛被迫參與</h3><p>僅4到5個月大的驚恐小牛，在毫無發言權的情況下被迫參與表演，並在過程中遭受被擰尾巴與電擊的折磨。</p></article>
+        <article class="slide"><div class="slide-no">P56</div><h3>常造成致命傷害</h3><p>小牛在時速30英里的奔跑中被繩索猛然套住脖子拉倒在地，這種暴烈扯動經常造成脊髓致命傷害、氣管受損甚至當場死亡。</p></article>
+        <article class="slide"><div class="slide-no">P57</div><h3>所謂勇敢其實是施暴</h3><p>仔細審視，那些被包裝成勇敢牛仔的競技者，其行為真相不過是對驚恐不知所措的小牛進行殘忍的施暴與虐待。</p></article>
+        <article class="slide"><div class="slide-no">P58</div><h3>醫學證明嚴重內傷</h3><p>擁有20年經驗的大型動物獸醫出具醫學證明，親眼見證這種高速勒住重摔的過程，會對小牛的內部器官造成嚴重的致命內傷。</p></article>
+        <article class="slide"><div class="slide-no">P59</div><h3>專家認定極不人道</h3><p>大型動物獸醫專家明確指出，從本質上來看，牛仔競技是極不人道的活動，而繩套套牛更是其中最殘忍的項目。</p></article>
+        <article class="slide"><div class="slide-no">P60</div><h3>屠宰場證實虐待</h3><p>就連肉類檢查官也作證，從牛仔競技場送來屠宰的動物常肋骨斷裂刺穿肺部，皮下大量積血，受虐至體無完膚。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="part4">
+      <div class="section-header">
+        <div>
+          <h2>61–80頁｜媒體與賽狗</h2>
+        </div>
+        <div class="badge">P61–P80</div>
+      </div>
+      <div class="grid">
+        <article class="slide"><div class="slide-no">P61</div><h3>動保組織揭露真相</h3><p>動物保護組織利用長焦相機與夜視相機，將牛仔競技中深藏在暗處的殘忍暴行錄下並公諸於世，揭露了其虐待真相。</p></article>
+        <article class="slide"><div class="slide-no">P62</div><h3>電視隱藏虐待畫面</h3><p>為了將節目包裝成健康的「家庭娛樂」，轉播的體育電視網刻意過濾並隱藏了使用電棍與暴虐撕扯動物尾巴的殘酷畫面。</p></article>
+        <article class="slide"><div class="slide-no">P63</div><h3>延遲播放掩蓋死亡</h3><p>在電視直播過程中，轉播單位甚至利用7秒鐘的延遲播放機制，在馬匹斷背倒地的瞬間切斷鏡頭，以掩蓋動物死亡的慘劇。</p></article>
+        <article class="slide"><div class="slide-no">P64</div><h3>為吸引觀眾刻意過濾</h3><p>電視台毫無例外地刪去套牛倒地後的真實慘狀，目的是為了不讓觀眾產生反感，藉此吸引更多非牛仔圈的大眾觀看。</p></article>
+        <article class="slide"><div class="slide-no">P65</div><h3>協會掌控轉播內容</h3><p>賽事協會專員直言不諱地承認，電視轉播要播放什麼內容完全是由協會決定的，電視台對此並沒有發言權。</p></article>
+        <article class="slide"><div class="slide-no">P66</div><h3>權力操控大眾認知</h3><p>這種強大的權力不僅肆意對動物施暴，更透過剪輯畫面操控了大眾的認知，因為他們清楚只要觀眾看不到暴行，就不會群起攻之。</p></article>
+        <article class="slide"><div class="slide-no">P67</div><h3>靈緹犬歷史悠久</h3><p>靈緹犬是犬類中歷史極為悠久的一支，擁有極快的奔跑速度，巔峰時期短距離時速可達45英里。</p></article>
+        <article class="slide"><div class="slide-no">P68</div><h3>曾受高度尊崇</h3><p>這種動物在歷史上曾受高度尊崇，在古埃及象徵王權，在古代英國，殺死靈緹犬的人甚至會被判處死刑。</p></article>
+        <article class="slide"><div class="slide-no">P69</div><h3>現在被當作工具</h3><p>然而不幸的是，靈緹犬卓越的奔跑天賦，如今卻被毫不關心動物權利的人類利用，淪為賽狗場上賺錢的工具。</p></article>
+        <article class="slide"><div class="slide-no">P70</div><h3>官方強調動物福利</h3><p>國家靈緹犬協會等官方機構表面上不斷強調「動物福利」，聲稱承認人類對動物的使用是合理的，只要負責任且人道即可。</p></article>
+        <article class="slide"><div class="slide-no">P71</div><h3>福利 vs 權利對立</h3><p>動物福利觀念支持人道使用動物，而動物權利觀念則與之強烈對立，主張反對一切對動物的剝削與使用，不管其聲稱有多「人道」。</p></article>
+        <article class="slide"><div class="slide-no">P72</div><h3>賽狗產業龐大</h3><p>靈緹犬賽跑是一項遍布全球且極度龐大的產業，在美國更是第六大吸引觀眾的項目，每年有超過3000萬的付費觀眾。</p></article>
+        <article class="slide"><div class="slide-no">P73</div><h3>動物被當消耗品</h3><p>每年有數萬隻靈緹犬被人工繁殖投入賽場，身體傷害與疾病被業者視為單純的經濟損失，動物完全被當作隨時可替換的消耗品。</p></article>
+        <article class="slide"><div class="slide-no">P74</div><h3>不夠快就被殺</h3><p>大約有三分之一的賽狗會因為跛足、生病或單純只是跑得不夠快而遭到淘汰，每年約有兩萬隻狗因此面臨槍殺、棒殺或電擊等殘酷處死。</p></article>
+        <article class="slide"><div class="slide-no">P75</div><h3>甚至送去做實驗</h3><p>這些溫順且純種的動物，在失去賽跑價值後，甚至會被大量出售或捐贈給各大學研究機構，充當實驗室裡的試驗品。</p></article>
+        <article class="slide"><div class="slide-no">P76</div><h3>長期被關籠</h3><p>存活的賽跑靈緹犬日子同樣悲慘，牠們在沒有比賽的日子裡，每天有高達22小時被關在狹小到難以動彈的木條箱籠裡。</p></article>
+        <article class="slide"><div class="slide-no">P77</div><h3>用語言掩飾虐待</h3><p>產業界用「防止啃咬木條受傷」的語言來掩飾給狗戴口鼻罩的行為，用虛偽的文字遊戲將另一種剝奪美化為人道對待。</p></article>
+        <article class="slide"><div class="slide-no">P78</div><h3>全球普遍虐殺</h3><p>對靈緹犬的特別虐待與屠殺絕不僅限於美國，在全球都很普遍，例如西班牙就曾發生數百隻失去賽跑能力的狗被吊死在樹林中的慘劇。</p></article>
+        <article class="slide"><div class="slide-no">P79</div><h3>美國也有大規模屠殺</h3><p>美國阿拉巴馬州也曾發生駭人的大規模屠殺，有人發現了埋有數千隻靈緹犬的墳坑，而殺狗者竟宣稱是用子彈「人道」結束牠們的生命。</p></article>
+        <article class="slide"><div class="slide-no">P80</div><h3>官方證實不人道</h3><p>負責調查的檢察官當面反駁了業者的「人道」說法，證實這些狗並未馬上死去，並將該墳地形容為慘絕人寰的「靈緹犬集中營」。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="part5">
+      <div class="section-header">
+        <div>
+          <h2>81–85頁｜結論</h2>
+        </div>
+        <div class="badge">P81–P85</div>
+      </div>
+      <div class="grid">
+        <article class="slide"><div class="slide-no">P81</div><h3>類似優生學淘汰</h3><p>檢察官更嚴厲指出，這種僅因為狗跑得不夠快就淘汰健康動物以培育超級品種的做法，與希特勒的優生學淘汰完全如出一轍。</p></article>
+        <article class="slide"><div class="slide-no">P82</div><h3>唯一解方：停止賽狗</h3><p>儘管有動保人士努力協助領養退役賽狗，但這對受虐動物而言往往太遲，動物權利論者認為真正且絕不妥協的解方只能是全面停止賽狗。</p></article>
+        <article class="slide"><div class="slide-no">P83</div><h3>這只是冰山一角</h3><p>無論是打獵、牛仔競技還是靈緹犬賽跑，本章所涉及的內容其實只是人類以體育之名侵犯動物權利、對動物進行剝削的冰山一角。</p></article>
+        <article class="slide"><div class="slide-no">P84</div><h3>動物競技沒有體育性</h3><p>在這些所謂的比賽中，根本沒有任何一點「體育運動」的元素，充斥在其中的只有人類對動物的統治、剝削、殘忍與虐待。</p></article>
+        <article class="slide" id="conclusion"><div class="slide-no">P85</div><h3>未來應全面禁止</h3><p>動物權利論者堅信並如史懷哲所言，未來的文明社會將無法容忍這種建立在虐殺基礎上的娛樂，這些殘忍的競技活動最終應當被全面禁止。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="discussion">
+      <div class="section-header">
+        <div>
+          <h2>問題討論｜我們真正該問的是什麼？</h2>
+          <p>
+            在閱讀完打獵、牛仔競技與賽狗的案例後，我們不只是在問「這些行為夠不夠人道」，
+            更是在追問：人類是否有權把動物變成娛樂、競賽與利益的工具。
+          </p>
+        </div>
+        <div class="badge">Discussion</div>
+      </div>
+      <div class="grid">
+        <article class="slide">
+          <div class="slide-no">Q1</div>
+          <h3>關鍵問題</h3>
+          <p>動物競技，是不夠人道，還是就不應該存在？</p>
+        </article>
+
+        <article class="slide">
+          <div class="slide-no">D1</div>
+          <h3>辯論問題一</h3>
+          <p>動物競技只要做到「人道」，是否就可以被接受？</p>
+        </article>
+
+        <article class="slide">
+          <div class="slide-no">D2</div>
+          <h3>辯論問題二</h3>
+          <p>人類的娛樂，是否可以建立在動物的痛苦之上？</p>
+        </article>
+
+        <article class="slide">
+          <div class="slide-no">D3</div>
+          <h3>辯論問題三</h3>
+          <p>如果沒有經濟利益，動物競技還會存在嗎？</p>
+        </article>
+      </div>
+    </section>
+
+
+
+    <div class="footer">
+      <strong>總結：</strong>
+      從打獵、牛仔競技到賽狗，作者一再指出，問題不只是「是否足夠人道」，而是這些活動本身就是將動物變成人類娛樂、榮耀與利益的工具。當競技的存在建立在動物無法拒絕、無法逃離、無法發聲的痛苦之上，那麼真正需要被挑戰的，就不是技術上的改善，而是制度本身的正當性。
+    </div>
+  </main>
+</body>
+</html>
